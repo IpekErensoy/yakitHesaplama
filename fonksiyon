@@ -1,0 +1,33 @@
+from PyQt4.QtGui import *
+from PyQt4.QtCore import *
+class yakitHesaplama(QDialog):
+    def __init__(self,anafonksiyon=None):
+        super(yakitHesaplama, self). __init__(anafonksiyon)
+        yerlesim=QGridLayout()
+        yerlesim.addWidget(QLabel('Gidilecek Yol: '),0,0)
+        self.gidilecekyol=QLineEdit()
+        yerlesim.addWidget(self.gidilecekyol,0,1)
+        yerlesim.addWidget(QLabel('Fiyat: '),1,0)
+        self.fiyat=QLineEdit()
+        yerlesim.addWidget(self.fiyat,1,1)
+        yerlesim.addWidget(QLabel('Yakıt Tüketimi: '),2,0)
+        self.yakittuketimi=QLineEdit()
+        yerlesim.addWidget(self.yakittuketimi,2,1)
+        yerlesim.addWidget(QLabel('Tutar: '),3,0)
+        self.tutar=QLabel('')
+        yerlesim.addWidget(self.tutar,3,1)
+        hesapla=QPushButton('Hesapla')
+        yerlesim.addWidget(hesapla,4,0,1,2)
+        self.setLayout(yerlesim)
+        self.setWindowTitle('Yakıt Hesaplama Penceresi')
+        self.connect(hesapla,SIGNAL('pressed()'), self.hesapla)
+    def hesapla(self):
+        gidilecekyol=int(self.gidilecekyol.text())
+        fiyat=float(self.fiyat.text())
+        yakittuketimi=float(self.yakittuketimi.text())
+        tutar=gidilecekyol*fiyat*yakittuketimi/100
+        self.tutar.setText("<font><b>%0.2f</b> TL</font>"%tutar)
+uyg=QApplication([])
+pencere=yakitHesaplama()
+pencere.show()
+uyg.exec_
